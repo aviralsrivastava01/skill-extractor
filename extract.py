@@ -19,7 +19,7 @@ if __name__ == "__main__":
     dir, _, files = next(os.walk('resumes'))
     files = [x for x in files if x.lower().endswith('pdf')]
     files = list(map(lambda x: os.path.join(dir, x), files))
-    skills = ['python', 'react', 'html','django', 'numpy']
+    skills = ['sql','nodejs','flask','python']
 
     for skill in skills:
         skilldir = os.path.join(os.getcwd(), skill)
@@ -32,6 +32,12 @@ if __name__ == "__main__":
 
     for file in files:
         basename = ntpath.basename(file)
+        if len(basename.split()) > 1:
+            newfile = os.path.join('resumes', '-'.join(basename.split()))
+            oldfile = file
+            file = newfile
+            shutil.move(oldfile, file)
+
         for skill in skills:
             if check(file, skill.lower()):
                 stats[skill].append(basename)
